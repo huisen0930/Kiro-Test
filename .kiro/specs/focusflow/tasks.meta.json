@@ -1,0 +1,41 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "7. Focus session domain + repository": [
+      {
+        "executionId": "e17e5a3d-a673-4a5e-b88f-b6ccf78e2b49",
+        "chatSessionId": "sess_a97ef3a8-ec1a-4ed1-995e-60f74893953b",
+        "timestamp": 1786434028325
+      },
+      {
+        "executionId": "e17e5a3d-a673-4a5e-b88f-b6ccf78e2b49",
+        "chatSessionId": "sess_a97ef3a8-ec1a-4ed1-995e-60f74893953b",
+        "timestamp": 1786434193039
+      }
+    ],
+    "8. Focus session routes": [
+      {
+        "executionId": "9126fb85-f728-4335-bf5d-b25dfa7b4a1a",
+        "chatSessionId": "sess_b6c50b66-50a6-4d4b-8d54-873a754c4c91",
+        "timestamp": 1786434299753
+      },
+      {
+        "executionId": "9126fb85-f728-4335-bf5d-b25dfa7b4a1a",
+        "chatSessionId": "sess_b6c50b66-50a6-4d4b-8d54-873a754c4c91",
+        "timestamp": 1786434470551
+      }
+    ],
+    "9. Daily stats endpoint": [
+      {
+        "executionId": "732ebb37-6a6f-455c-acf6-e65e254ffdc2",
+        "chatSessionId": "sess_00ee399c-6c08-46b2-a348-c5e7a8623a1d",
+        "timestamp": 1786434567832
+      },
+      {
+        "executionId": "732ebb37-6a6f-455c-acf6-e65e254ffdc2",
+        "chatSessionId": "sess_00ee399c-6c08-46b2-a348-c5e7a8623a1d",
+        "timestamp": 1786434900894
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+# Normalize line endings across platforms: store as LF in the repo,
+# let Git handle checkout per-OS. Keeps diffs clean for a mixed Win/macOS/Linux team.
+* text=auto eol=lf
+
+# Explicit text types
+*.ts   text eol=lf
+*.js   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# Lockfiles and shell scripts stay LF
+package-lock.json text eol=lf
+*.sh              text eol=lf

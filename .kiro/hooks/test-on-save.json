@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Run tests on TypeScript save",
+      "trigger": "PostFileSave",
+      "description": "Runs the Vitest suite whenever a .ts file is saved, giving instant feedback that nothing regressed.",
+      "matcher": "\\.ts$",
+      "action": {
+        "type": "command",
+        "command": "npm test --silent",
+        "timeout": 120
+      }
+    }
+  ]
+}
