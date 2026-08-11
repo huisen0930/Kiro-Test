@@ -1,0 +1,34 @@
+name: Feature request
+description: Propose a new capability. Larger ideas should become a spec before coding.
+title: "Feature: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Small features can be a single task. Anything non-trivial should start as a
+        new spec under `.kiro/specs/<feature>/` (copy `.kiro/specs/_TEMPLATE/`).
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What need does this address? Who is it for?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: Sketch the endpoints or behavior. Detail belongs in the spec.
+    validations:
+      required: true
+  - type: dropdown
+    id: needs-spec
+    attributes:
+      label: Does this need its own spec?
+      options:
+        - "Yes - new spec folder"
+        - "No - fits an existing spec as a task"
+        - "Not sure"
+    validations:
+      required: true

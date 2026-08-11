@@ -1,0 +1,36 @@
+name: Bug report
+description: Something behaves differently from what the spec says it should.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Describe the actual behavior, including the endpoint and request if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened? Cite the requirement ID if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. POST /tasks with ...
+        2. PATCH /tasks/:id ...
+        3. See error
+    validations:
+      required: true
+  - type: input
+    id: requirements
+    attributes:
+      label: Related requirement / spec
+      placeholder: "focusflow 3.2"
+    validations:
+      required: false
