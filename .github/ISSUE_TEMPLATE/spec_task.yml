@@ -1,0 +1,51 @@
+name: Spec task
+description: A unit of work derived from a .kiro spec's tasks.md. This is the main issue type.
+title: "Task: "
+labels: ["spec"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for work that comes from a spec. Keep it to one pickable slice.
+        The spec under `.kiro/specs/<feature>/` is the source of truth.
+  - type: input
+    id: spec
+    attributes:
+      label: Spec
+      description: Which spec folder does this belong to?
+      placeholder: focusflow
+    validations:
+      required: true
+  - type: input
+    id: task-number
+    attributes:
+      label: Task number
+      description: The task number from that spec's tasks.md (if applicable).
+      placeholder: "10"
+    validations:
+      required: false
+  - type: input
+    id: requirements
+    attributes:
+      label: Requirement IDs
+      description: The requirement IDs this task satisfies, for traceability.
+      placeholder: "6.1, 6.3"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What needs to be done
+      description: Summarize the slice of work. Link to the spec for full detail.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How do we know it's done? Prefer testable statements.
+      placeholder: |
+        - [ ] GET /stats returns counts + minutes for the UTC day
+        - [ ] Tests with a fixed clock assert exact values
+    validations:
+      required: true

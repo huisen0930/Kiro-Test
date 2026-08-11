@@ -16,3 +16,7 @@ npm-debug.log*
 # OS / editor cruft
 .DS_Store
 Thumbs.db
+
+# Kiro local MCP config — may contain tokens.
+# Copy .kiro/settings/mcp.example.json to mcp.json and fill in secrets locally.
+.kiro/settings/mcp.json
