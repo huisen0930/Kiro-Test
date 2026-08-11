@@ -31,6 +31,7 @@ HTTP  ──▶  routes/ (Zod validate) ──▶ domain/ (rules) ──▶ repo
 | Domain errors as tagged objects, mapped centrally | Routes stay thin; error envelope stays consistent | 6.1, 6.3 |
 | Single global "active session" rule | Matches a single-user focus model; simpler + predictable | 4.3 |
 | In-memory repo behind interface | Ship working software now; storage swap is a clean future task | NFR |
+| SQLite via built-in `node:sqlite` | Durable storage with zero deps / no native build; synchronous fits the interfaces | NFR, task 11 |
 
 ## Data model
 ```ts
@@ -53,6 +54,49 @@ interface FocusSession {
   durationMinutes: number | null;  // set on stop, >= 1 (4.4)
 }
 ```
+
+## Durable persistence (SQLite) — task 11
+The repository interfaces exist precisely so storage can change without touching routes or
+domain logic. Task 11 adds durable implementations using Node's built-in `node:sqlite`
+(`DatabaseSync`).
+
+- **Why `node:sqlite`:** zero third-party dependencies and no native build step, matching the
+  project's "no native build deps" stance (tech.md). It is synchronous, which fits the existing
+  synchronous repository interfaces exactly — no interface changes needed.
+- **Node baseline:** `node:sqlite` requires Node 22.5+ (unflagged on Node 24; behind
+  `--experimental-sqlite` on Node 22). `engines.node` is raised to `>=22`, and CI runs the
+  matrix with `NODE_OPTIONS=--experimental-sqlite` so both 22 and 24 exercise it.
+- **Wiring:** only `server.ts` changes — it opens a database and constructs the SQLite repos.
+  `buildApp(deps)` still defaults to the in-memory repos, so all `app.inject()` tests stay fast
+  and storage-free.
+- **Decoupling:** the repository modules import `DatabaseSync` as a *type only*, so importing
+  them never loads the runtime module. The single runtime import lives in
+  `repositories/sqlite.ts` (`openDatabase`), used by `server.ts` and the SQLite tests.
+
+### Schema
+```sql
+CREATE TABLE IF NOT EXISTS tasks (
+  seq         INTEGER PRIMARY KEY AUTOINCREMENT,  -- stable ordering tie-break
+  id          TEXT NOT NULL UNIQUE,
+  title       TEXT NOT NULL,
+  tags        TEXT NOT NULL,        -- JSON array of lowercased tags (1.4)
+  status      TEXT NOT NULL,
+  createdAt   TEXT NOT NULL,        -- ISO-8601 UTC
+  completedAt TEXT                  -- nullable
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  seq             INTEGER PRIMARY KEY AUTOINCREMENT,
+  id              TEXT NOT NULL UNIQUE,
+  taskId          TEXT NOT NULL,
+  startedAt       TEXT NOT NULL,
+  endedAt         TEXT,             -- null while active
+  durationMinutes INTEGER           -- set on stop, >= 1 (4.4)
+);
+```
+- `list()` ordering mirrors the in-memory repo: tasks newest-first by `createdAt DESC, seq DESC`;
+  the `tag` filter is applied in JS against the parsed JSON array to match `tags.includes(tag)`.
+- `getActive()` selects the single row with `endedAt IS NULL` (single global active-session rule, 4.3).
 
 ## API surface
 | Method | Path | Purpose | Success | Key criteria |
@@ -96,7 +140,8 @@ Error codes: `VALIDATION_ERROR` (400), `NOT_FOUND` (404), `SESSION_ACTIVE` (409)
 - Fixed clock makes 5.1–5.3 assertions exact.
 
 ## Future work (explicitly deferred, not forgotten)
-- Durable `SqliteTaskRepository` / `SqliteSessionRepository` implementing the same interfaces.
 - Authentication and per-user scoping.
 - Pagination for `/tasks`.
-Each will be added as new requirements + tasks, preserving traceability.
+
+Durable SQLite repositories (task 11) are now implemented — see "Durable persistence (SQLite)"
+above. Each remaining item will be added as new requirements + tasks, preserving traceability.
