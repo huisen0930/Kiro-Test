@@ -58,11 +58,11 @@ incremental execution:
   - Tests with a fixed clock asserting exact counts and minutes.
   - _Requirements: 5.1–5.4._
 
-- [ ] 10. Error-handling hardening pass
+- [-] 10. Error-handling hardening pass
   - Verify 500s never leak stacks; confirm envelope on every error path.
   - _Requirements: 6.1, 6.3._
 
-- [ ] 11. (Stretch) Durable SQLite repositories
+- [~] 11. (Stretch) Durable SQLite repositories
   - Implement `SqliteTaskRepository` / `SqliteSessionRepository` behind existing interfaces;
     switch wiring in `server.ts` only. Demonstrates the storage swap the interfaces enable.
   - _Requirements: NFR; enables future persistence._
