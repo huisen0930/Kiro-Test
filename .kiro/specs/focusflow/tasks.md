@@ -58,7 +58,7 @@ incremental execution:
   - Tests with a fixed clock asserting exact counts and minutes.
   - _Requirements: 5.1–5.4._
 
-- [-] 10. Error-handling hardening pass
+- [x] 10. Error-handling hardening pass
   - Verify 500s never leak stacks; confirm envelope on every error path.
   - _Requirements: 6.1, 6.3._
 
