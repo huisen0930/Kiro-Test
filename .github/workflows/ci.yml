@@ -17,10 +17,15 @@ jobs:
   verify:
     name: lint / build / test
     runs-on: ubuntu-latest
+    # node:sqlite (task 11) needs Node 22.5+. The flag is required on Node 22 and
+    # accepted as a no-op on Node 24, so setting it here lets both matrix legs
+    # exercise the SQLite repositories.
+    env:
+      NODE_OPTIONS: --experimental-sqlite
     strategy:
       fail-fast: false
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [22.x, 24.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
