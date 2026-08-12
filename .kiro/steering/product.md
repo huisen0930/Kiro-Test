@@ -3,7 +3,8 @@
 ## What it is
 FocusFlow is a small REST API for tracking tasks and focus sessions (Pomodoro-style
 deep-work blocks). It exists as a reference project that demonstrates how Kiro's
-spec-driven workflow, steering, and hooks come together on a real, runnable codebase.
+spec-driven workflow, steering, hooks, and skills come together on a real, runnable codebase
+with production-grade GitHub maintainability (specs → issues → PRs → CI).
 
 ## Who it's for
 - Solo developers and small teams who want a lightweight, self-hostable way to log

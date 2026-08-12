@@ -4,11 +4,11 @@
     {
       "name": "Verify build after spec task",
       "trigger": "PostTaskExec",
-      "description": "After a FocusFlow spec task is marked complete, type-check and run the full test suite so every finished task leaves the project green.",
+      "description": "After a FocusFlow spec task is marked complete, run the full Definition of Done (lint + build + test) so every finished task leaves the project green.",
       "action": {
         "type": "command",
-        "command": "npm run lint --silent; npm test --silent",
-        "timeout": 180
+        "command": "npm run verify --silent",
+        "timeout": 240
       }
     }
   ]

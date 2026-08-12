@@ -1,44 +1,67 @@
 # Design — <Feature Name>
 
-> How the feature is built. This follows `requirements.md` and precedes `tasks.md`.
-> Respect the layering rules in `.kiro/steering/structure.md` (dependencies point inward).
+> Fill in after `requirements.md` is agreed. Every decision should cite the requirement id
+> it satisfies. Respect the inward-pointing dependency rule in `structure.md`.
 
 ## Overview
+<!-- How this fits the existing architecture in one short paragraph. -->
 
-<Short summary of the approach and how it fits the existing architecture.>
+## UI / Wireframes
+<!-- For features with a user interface. Link wireframes/mockups so implementers build from the
+     same visual contract as the tech spec. For headless / API-only features, write "N/A". -->
+- Wireframes: `.kiro/specs/<feature>/wireframes/` (reference each screen/state by filename)
+- Key screens & states: <happy path, empty, loading, error>
+- Interaction / accessibility notes: <...>
 
-## Components
+## Architecture
+<!-- Diagram or bullet flow: routes -> domain -> repositories. Note any new module. -->
 
-### Domain (`src/domain/`)
-- <Pure functions/types. No Fastify, no I/O. e.g. `computeX`, validation rules.>
+## Key design decisions
+| Decision | Why | Satisfies |
+|---|---|---|
+| <decision> | <rationale> | <requirement ids> |
 
-### Repositories (`src/repositories/`)
-- <Interface + in-memory implementation. Depends on domain types only.>
+## Components and Interfaces
+<!-- The modules/functions this feature touches or adds, per layer. Keep dependencies
+     pointing inward (routes -> domain -> repositories). For each component, note its
+     responsibility and the interface it exposes or consumes. -->
+- **routes/** — <which route plugin(s), what they parse/validate and delegate to.>
+- **domain/** — <pure functions/types added or changed; the rules they encode.>
+- **repositories/** — <interface methods added/used; in-memory vs. durable.>
+- **lib/** — <cross-cutting helpers touched (ids, clock, errors), if any.>
 
-### Schemas (`src/schemas/`)
-- <Zod schemas for request/response. Single source of truth for shapes.>
-
-### Routes (`src/routes/`)
-- <Fastify plugin. Validates with Zod, returns the standard error envelope.>
+## Data Models
+```ts
+// New/changed types. Keep timestamps as ISO-8601 UTC strings.
+```
 
 ## API surface
+| Method | Path | Purpose | Success | Key criteria |
+|---|---|---|---|---|
+| <VERB> | `/path` | <purpose> | <2xx> | <ids> |
 
-| Method | Path | Body / query | Success | Errors |
-|--------|------|--------------|---------|--------|
-| GET    | /example | — | 200 `{...}` | — |
-| POST   | /example | `{...}` | 201 `{...}` | 400 VALIDATION_ERROR |
+## Validation strategy
+<!-- Which Zod schemas, where validation happens, how failures map to VALIDATION_ERROR. -->
 
-## Error handling
+## Correctness Properties
+<!-- The invariants that must always hold, phrased so tests can assert them. Cite the
+     requirement id each property enforces. Examples: idempotency, ordering guarantees,
+     rounding rules, UTC window boundaries, single-active-session constraints. -->
+- <property> — <why it must hold> (<requirement ids>)
 
-<Which error codes apply. All errors use the envelope:
-`{ "error": { "code": string, "message": string, "details"?: unknown } }`.>
+## Error Handling
+<!-- Reuse the standard envelope { error: { code, message, details? } } and the existing
+     error-code catalog. Add a new code only if truly needed, and document it here.
+     State how each failure maps to a status code and where the mapping happens
+     (route handler vs. central setErrorHandler / setNotFoundHandler). -->
+| Condition | Code | Status |
+|---|---|---|
+| <invalid input> | `VALIDATION_ERROR` | 400 |
+| <missing resource> | `NOT_FOUND` | 404 |
+| <unexpected failure> | `INTERNAL_ERROR` | 500 |
 
 ## Testing strategy
+<!-- Domain unit tests + app.inject() integration tests. Use a fixed clock for time logic. -->
 
-- **Domain:** fast unit tests for the pure logic.
-- **Routes:** integration tests via `buildApp()` + `app.inject()` (no port opened).
-- Inject a fixed `clock` for deterministic time-based behavior.
-
-## Trade-offs / deferred
-
-- <Anything intentionally left for later, and why.>
+## Future work (deferred, not forgotten)
+- <!-- Anything intentionally out of scope, to become future requirements/tasks. -->
