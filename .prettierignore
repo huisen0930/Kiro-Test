@@ -1,0 +1,7 @@
+dist/
+coverage/
+node_modules/
+pr-drafts/
+package-lock.json
+*.md
+.kiro/

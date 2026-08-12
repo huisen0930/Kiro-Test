@@ -54,17 +54,15 @@ export class SqliteTaskRepository implements TaskRepository {
   }
 
   list(filter: TaskListFilter = {}): Task[] {
-    const rows = (
-      filter.status
-        ? this.db
-            .prepare(
-              `SELECT * FROM tasks WHERE status = ? ORDER BY createdAt DESC, seq DESC`,
-            )
-            .all(filter.status)
-        : this.db
-            .prepare(`SELECT * FROM tasks ORDER BY createdAt DESC, seq DESC`)
-            .all()
-    ) as unknown as TaskRow[];
+    const rows = (filter.status
+      ? this.db
+          .prepare(
+            `SELECT * FROM tasks WHERE status = ? ORDER BY createdAt DESC, seq DESC`,
+          )
+          .all(filter.status)
+      : this.db
+          .prepare(`SELECT * FROM tasks ORDER BY createdAt DESC, seq DESC`)
+          .all()) as unknown as TaskRow[];
 
     let tasks = rows.map(mapRow);
     if (filter.tag) {
@@ -76,8 +74,7 @@ export class SqliteTaskRepository implements TaskRepository {
 
   getById(id: string): Task | undefined {
     const row = this.db.prepare(`SELECT * FROM tasks WHERE id = ?`).get(id) as
-      | TaskRow
-      | undefined;
+      TaskRow | undefined;
     return row ? mapRow(row) : undefined;
   }
 

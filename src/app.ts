@@ -105,7 +105,10 @@ export function buildApp(deps: AppDeps = {}): FastifyInstance {
     // stack trace or internal message in the response body (6.3).
     request.log.error(error);
     return reply.status(500).send({
-      error: { code: "INTERNAL_ERROR", message: "An unexpected error occurred" },
+      error: {
+        code: "INTERNAL_ERROR",
+        message: "An unexpected error occurred",
+      },
     });
   });
 

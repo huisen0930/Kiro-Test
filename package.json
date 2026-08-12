@@ -13,7 +13,12 @@
     "start": "node --experimental-sqlite dist/server.js",
     "test": "vitest run",
     "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
     "lint": "tsc --noEmit",
+    "lint:eslint": "eslint .",
+    "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" \"scripts/**/*.mjs\"",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"scripts/**/*.mjs\"",
+    "verify": "npm run lint && npm run lint:eslint && npm run format && npm run build && npm test",
     "sync:issues": "node scripts/sync-spec-issues.mjs"
   },
   "dependencies": {
@@ -21,9 +26,16 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.17.0",
     "@types/node": "^22.10.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0",
     "vitest": "^2.1.8"
   }
 }

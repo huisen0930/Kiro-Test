@@ -1,12 +1,12 @@
-# Code ownership for review routing.
-# Every PR requests a review from the listed owners for matching paths.
-# Add teammates here as the team grows (e.g. `/src/ @alice @bob`).
+# Code owners are automatically requested for review on matching paths.
+# Replace the placeholder owner below with your GitHub username or team
+# (e.g. @octocat or @your-org/maintainers).
+# Docs: https://docs.github.com/articles/about-code-owners
 
-*                       @huisen0930
+# Default owner for everything in the repo
+*                 @huisen0930
 
-# The spec is the source of truth — changes here deserve extra eyes.
-/.kiro/specs/           @huisen0930
-/.kiro/steering/        @huisen0930
-
-# CI and repo automation.
-/.github/               @huisen0930
+# The spec, steering, skills, and automation are the project's contract —
+# require an explicit review when they change.
+/.kiro/           @huisen0930
+/.github/         @huisen0930

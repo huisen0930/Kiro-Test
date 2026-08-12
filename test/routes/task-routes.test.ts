@@ -86,7 +86,10 @@ describe("GET /tasks", () => {
   });
 
   it("returns 404 with NOT_FOUND for an unknown id (2.5)", async () => {
-    const res = await app.inject({ method: "GET", url: "/tasks/does-not-exist" });
+    const res = await app.inject({
+      method: "GET",
+      url: "/tasks/does-not-exist",
+    });
     expect(res.statusCode).toBe(404);
     expect((res.json() as ErrorBody).error.code).toBe("NOT_FOUND");
   });
@@ -130,7 +133,10 @@ describe("PATCH / complete / DELETE /tasks/:id", () => {
 
   it("deletes a task then returns 404 (3.4, 3.5)", async () => {
     const task = await createTask(app, { title: "temp" });
-    const del = await app.inject({ method: "DELETE", url: `/tasks/${task.id}` });
+    const del = await app.inject({
+      method: "DELETE",
+      url: `/tasks/${task.id}`,
+    });
     expect(del.statusCode).toBe(204);
 
     const after = await app.inject({ method: "GET", url: `/tasks/${task.id}` });
@@ -138,7 +144,10 @@ describe("PATCH / complete / DELETE /tasks/:id", () => {
   });
 
   it("returns 404 when completing an unknown task (3.5)", async () => {
-    const res = await app.inject({ method: "POST", url: "/tasks/nope/complete" });
+    const res = await app.inject({
+      method: "POST",
+      url: "/tasks/nope/complete",
+    });
     expect(res.statusCode).toBe(404);
     expect((res.json() as ErrorBody).error.code).toBe("NOT_FOUND");
   });
