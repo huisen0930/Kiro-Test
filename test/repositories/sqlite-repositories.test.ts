@@ -1,6 +1,10 @@
 import { createRequire } from "node:module";
 import { describe, it, expect, beforeEach } from "vitest";
-import { applyUpdate, completeTask, createTask } from "../../src/domain/task.js";
+import {
+  applyUpdate,
+  completeTask,
+  createTask,
+} from "../../src/domain/task.js";
 import { startSession, stopSession } from "../../src/domain/session.js";
 import { fixedClock } from "../../src/lib/clock.js";
 import { SqliteTaskRepository } from "../../src/repositories/sqlite-task-repository.js";
@@ -18,7 +22,9 @@ import { SqliteSessionRepository } from "../../src/repositories/sqlite-session-r
 const nodeRequire = createRequire(import.meta.url);
 let DatabaseSync: typeof import("node:sqlite").DatabaseSync | undefined;
 try {
-  ({ DatabaseSync } = nodeRequire("node:sqlite") as typeof import("node:sqlite"));
+  ({ DatabaseSync } = nodeRequire(
+    "node:sqlite",
+  ) as typeof import("node:sqlite"));
 } catch {
   DatabaseSync = undefined;
 }
@@ -53,8 +59,14 @@ describe.skipIf(!DatabaseSync)("SqliteTaskRepository", () => {
   });
 
   it("lists newest-first by createdAt", () => {
-    const older = createTask({ title: "older" }, fixedClock("2026-08-10T09:00:00.000Z"));
-    const newer = createTask({ title: "newer" }, fixedClock("2026-08-11T09:00:00.000Z"));
+    const older = createTask(
+      { title: "older" },
+      fixedClock("2026-08-10T09:00:00.000Z"),
+    );
+    const newer = createTask(
+      { title: "newer" },
+      fixedClock("2026-08-11T09:00:00.000Z"),
+    );
     repo.create(older);
     repo.create(newer);
 
@@ -74,8 +86,12 @@ describe.skipIf(!DatabaseSync)("SqliteTaskRepository", () => {
     repo.create(createTask({ title: "open one" }, clock));
     repo.create(completeTask(createTask({ title: "done one" }, clock), clock));
 
-    expect(repo.list({ status: "done" }).map((t) => t.title)).toEqual(["done one"]);
-    expect(repo.list({ status: "open" }).map((t) => t.title)).toEqual(["open one"]);
+    expect(repo.list({ status: "done" }).map((t) => t.title)).toEqual([
+      "done one",
+    ]);
+    expect(repo.list({ status: "open" }).map((t) => t.title)).toEqual([
+      "open one",
+    ]);
   });
 
   it("filters by tag against the stored JSON array", () => {
@@ -91,14 +107,20 @@ describe.skipIf(!DatabaseSync)("SqliteTaskRepository", () => {
     const task = createTask({ title: "draft", tags: ["x"] }, clock);
     repo.create(task);
 
-    const updated = completeTask(applyUpdate(task, { title: "final", tags: ["y"] }), clock);
+    const updated = completeTask(
+      applyUpdate(task, { title: "final", tags: ["y"] }),
+      clock,
+    );
     repo.update(updated);
 
     expect(repo.getById(task.id)).toEqual(updated);
   });
 
   it("deletes a task and reports whether a row was removed", () => {
-    const task = createTask({ title: "temp" }, fixedClock("2026-08-11T10:00:00.000Z"));
+    const task = createTask(
+      { title: "temp" },
+      fixedClock("2026-08-11T10:00:00.000Z"),
+    );
     repo.create(task);
 
     expect(repo.delete(task.id)).toBe(true);
@@ -115,7 +137,10 @@ describe.skipIf(!DatabaseSync)("SqliteSessionRepository", () => {
   });
 
   it("creates an active session and surfaces it via getActive", () => {
-    const session = startSession("task-1", fixedClock("2026-08-11T10:00:00.000Z"));
+    const session = startSession(
+      "task-1",
+      fixedClock("2026-08-11T10:00:00.000Z"),
+    );
     repo.create(session);
 
     expect(repo.getActive()).toEqual(session);
@@ -126,10 +151,16 @@ describe.skipIf(!DatabaseSync)("SqliteSessionRepository", () => {
   });
 
   it("clears the active session once stopped and persists the duration (4.4)", () => {
-    const session = startSession("task-1", fixedClock("2026-08-11T10:00:00.000Z"));
+    const session = startSession(
+      "task-1",
+      fixedClock("2026-08-11T10:00:00.000Z"),
+    );
     repo.create(session);
 
-    const stopped = stopSession(session, fixedClock("2026-08-11T10:25:30.000Z"));
+    const stopped = stopSession(
+      session,
+      fixedClock("2026-08-11T10:25:30.000Z"),
+    );
     repo.update(stopped);
 
     expect(repo.getActive()).toBeUndefined();

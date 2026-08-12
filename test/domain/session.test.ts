@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { startSession, stopSession, type FocusSession } from "../../src/domain/session.js";
+import {
+  startSession,
+  stopSession,
+  type FocusSession,
+} from "../../src/domain/session.js";
 import { fixedClock } from "../../src/lib/clock.js";
 import { InMemorySessionRepository } from "../../src/repositories/in-memory-session-repository.js";
 
@@ -11,7 +15,10 @@ function activeSessionAt(startIso: string): FocusSession {
 }
 
 /** Stops an active session `seconds` after it started, using a fixed clock. */
-function stopAfterSeconds(session: FocusSession, seconds: number): FocusSession {
+function stopAfterSeconds(
+  session: FocusSession,
+  seconds: number,
+): FocusSession {
   const endMs = new Date(session.startedAt).getTime() + seconds * 1000;
   return stopSession(session, fixedClock(new Date(endMs).toISOString()));
 }

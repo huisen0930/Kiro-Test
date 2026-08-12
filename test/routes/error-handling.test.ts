@@ -73,7 +73,10 @@ describe("error handling — unexpected faults (6.3)", () => {
 
     expect(res.statusCode).toBe(500);
     expect(res.json()).toEqual({
-      error: { code: "INTERNAL_ERROR", message: "An unexpected error occurred" },
+      error: {
+        code: "INTERNAL_ERROR",
+        message: "An unexpected error occurred",
+      },
     });
 
     // The raw thrown message and any stack-trace markers must never reach the

@@ -53,14 +53,18 @@ export class SqliteSessionRepository implements SessionRepository {
 
   getActive(): FocusSession | undefined {
     const row = this.db
-      .prepare(`SELECT * FROM sessions WHERE endedAt IS NULL ORDER BY seq LIMIT 1`)
+      .prepare(
+        `SELECT * FROM sessions WHERE endedAt IS NULL ORDER BY seq LIMIT 1`,
+      )
       .get() as SessionRow | undefined;
     return row ? mapRow(row) : undefined;
   }
 
   update(session: FocusSession): FocusSession {
     this.db
-      .prepare(`UPDATE sessions SET endedAt = ?, durationMinutes = ? WHERE id = ?`)
+      .prepare(
+        `UPDATE sessions SET endedAt = ?, durationMinutes = ? WHERE id = ?`,
+      )
       .run(session.endedAt, session.durationMinutes, session.id);
     return session;
   }

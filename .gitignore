@@ -26,3 +26,7 @@ Thumbs.db
 *.db-journal
 *.db-wal
 *.db-shm
+
+# Local MCP config may contain tokens — keep it out of git.
+# Copy mcp.example.json to this path and supply secrets via your environment.
+.kiro/settings/mcp.json

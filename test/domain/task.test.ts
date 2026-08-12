@@ -24,7 +24,10 @@ describe("normalizeTags (1.4)", () => {
 
 describe("createTask (1.1, 1.4)", () => {
   it("creates an open task with trimmed title, normalized tags, and a timestamp", () => {
-    const task = createTask({ title: "  Write the spec  ", tags: ["A", "a"] }, clock);
+    const task = createTask(
+      { title: "  Write the spec  ", tags: ["A", "a"] },
+      clock,
+    );
     expect(task.title).toBe("Write the spec");
     expect(task.tags).toEqual(["a"]);
     expect(task.status).toBe("open");

@@ -1,13 +1,21 @@
 {
-  "_comment": "TEMPLATE. Copy this to .kiro/settings/mcp.json (git-ignored) and provide GITHUB_TOKEN via your environment. Never commit real tokens.",
+  "_comment": "Copy this file to .kiro/settings/mcp.json (git-ignored) and supply secrets via your environment. Set disabled=false to enable a server. These example servers use npx / uvx.",
   "mcpServers": {
     "github": {
-      "url": "https://api.githubcopilot.com/mcp/",
-      "headers": {
-        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       },
       "disabled": false,
       "autoApprove": []
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "env": {},
+      "disabled": true,
+      "autoApprove": ["fetch"]
     }
   }
 }
