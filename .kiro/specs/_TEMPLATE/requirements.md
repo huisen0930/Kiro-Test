@@ -1,37 +1,40 @@
 # Requirements — <Feature Name>
 
-> Copy this folder to `.kiro/specs/<feature>/` and fill it in. Requirements come first:
-> they define WHAT and the acceptance criteria. Keep them testable.
+> Copy this folder to `.kiro/specs/<feature>/` and fill it in. Write requirements FIRST,
+> then design, then tasks. Delete these quote blocks as you go.
 
 ## Introduction
+<!-- One paragraph: what this capability is and why it exists. Link to product.md context. -->
 
-<One paragraph: what this feature is, who it's for, and the value it delivers.>
+Acceptance criteria use EARS (see `.kiro/skills/spec-authoring/references/ears-guide.md`):
+- **WHEN** `<trigger>` **THE SYSTEM SHALL** `<response>`
+- **IF** `<condition>` **THEN THE SYSTEM SHALL** `<response>`
+- **WHILE** `<state>` **THE SYSTEM SHALL** `<response>`
+- **WHERE** `<optional feature>` **THE SYSTEM SHALL** `<response>`
+- **THE SYSTEM SHALL** `<response>` (always-true)
 
-## Requirements
+---
 
-### Requirement 1: <short title>
+## Requirement 1 — <short title>
+**User story:** As a `<role>`, I want `<capability>`, so that `<benefit>`.
 
-**User story:** As a <role>, I want <capability>, so that <benefit>.
+#### Acceptance criteria
+1.1. WHEN ... THE SYSTEM SHALL ...
+1.2. IF ... THEN THE SYSTEM SHALL ... (status + error code)
+1.3. ...
 
-**Acceptance criteria** (EARS style):
+## Requirement 2 — <short title>
+**User story:** As a `<role>`, I want `<capability>`, so that `<benefit>`.
 
-1. WHEN <trigger/condition> THEN the system SHALL <observable behavior>.
-2. WHEN <trigger/condition> THEN the system SHALL <observable behavior>.
-3. IF <edge case> THEN the system SHALL <how it's handled>.
+#### Acceptance criteria
+2.1. ...
+2.2. ...
 
-### Requirement 2: <short title>
-
-**User story:** As a <role>, I want <capability>, so that <benefit>.
-
-**Acceptance criteria:**
-
-1. WHEN <...> THEN the system SHALL <...>.
+---
 
 ## Non-functional requirements
+- <!-- performance, determinism, no native deps, coverage, security, etc. -->
 
-- <e.g. no dependencies with native build steps; installs cross-platform.>
-- <e.g. all timestamps are ISO-8601 UTC at the API boundary.>
-
-## Out of scope
-
-- <Explicitly list what this feature does NOT cover, to keep the surface sharp.>
+## Traceability
+Each acceptance criterion id (e.g. `2.1`) is referenced in `design.md` and `tasks.md`, so
+every change traces requirement → design → task → test.

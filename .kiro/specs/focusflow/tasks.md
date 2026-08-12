@@ -162,12 +162,11 @@ the latest wave of any prerequisite).
 
 ## Notes
 
-- Tasks 1–6 form the foundation: full task CRUD, health, and error handling. They are
-  implemented and tested.
-- Tasks 7–11 are the remaining slices. Try these yourself with **Start task** to experience
-  Kiro's incremental execution.
-- Task 11 is a stretch goal (`[~]` in progress): it swaps the in-memory repositories for a
-  durable SQLite implementation behind the existing interfaces, touching wiring in
-  `server.ts` only.
+- **All 11 tasks are implemented and tested** (68 tests passing across domain, routes, and the
+  SQLite repositories). Tasks 1–6 are the foundation (task CRUD, health, error handling);
+  tasks 7–10 add focus sessions, daily stats, and the hardening pass; task 11 swaps in the
+  durable `node:sqlite` repositories behind the existing interfaces (wiring in `server.ts` only).
+- This spec is therefore **complete**. New capabilities start a new spec under `.kiro/specs/`
+  (copy `_TEMPLATE/`), per the golden rule — the `spec-authoring` skill walks through it.
 - Each task cites the requirement ids it satisfies so any change can be traced from
   requirement → design → implementation task → test.
