@@ -22,7 +22,7 @@
     "sync:issues": "node scripts/sync-spec-issues.mjs"
   },
   "dependencies": {
-    "fastify": "^5.2.0",
+    "fastify": "^5.12.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
